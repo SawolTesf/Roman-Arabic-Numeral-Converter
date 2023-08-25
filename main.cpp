@@ -88,7 +88,6 @@ bool isValid(string line){
 }
 
 int main(){
-/* ################  DO NOT MODIFY CODE IN THIS BLOCK ###################### */
    string temp;  //variable for database filename
    string batch; //variable for batch filename
 
@@ -108,7 +107,6 @@ int main(){
 
    infile.close();
    outfile.close();
-/* ################  DO NOT MODIFY CODE IN THIS BLOCK ###################### */
     
     infile.open(temp, ios::binary);
     outfile.open(database, ios::binary | ios::ate);
