@@ -19,11 +19,10 @@ int RomanToArabic(string line){
     map<char, int> romanValues = {{'I', 1}, {'V', 5}, {'X', 10}, {'L', 50}, {'C', 100}, {'D', 500}, {'M', 1000}};
     
     int arabicNumb = 0; // Will be holding the arabic values
-    long unsigned int i; 
     
     // The function uses a loop to go through each character in the string and checks its value.
     // Depending on the value, the function adds the corresponding Arabic number to a total.
-    for(i = 0; i < line.size(); i++){
+    for(size_t i = 0; i < line.size(); i++){
         // If the current character is smaller than the next character, subtract its value from the total
         if(romanValues[line[i]] < romanValues[line[i+1]]){
             arabicNumb -= romanValues[line[i]];
@@ -61,55 +60,36 @@ string arabicToRoman (int arabicNumb){
 }
 
 /*
-The overall function takes in a string of a line from an input file and checks if it is a valid line by checking if the first 17 characters 
-are Roman numerals and the last 4 characters are digits. If both conditions are met, the function returns true, 
-indicating that the line is valid. If either of the conditions are not met, the function returns false.
+The overall function takes in a string of a line from an input file and checks if it is a valid line by checking if it contains only valid characters. If all characters are valid, then this function returns true. Otherwise, this function returns false.
 */
 bool isValid(string line){
-    for(int i = 0; i < 17; i++){
-        char ch = line[i];
-        if(ch == 'I' || ch == 'V' || ch == 'X' || ch == 'L' || ch == 'C' 
-        || ch == 'D' || ch == 'M'){
-            return true;
-            
-            break;
-            }
-    }
-        // Check if the last 4 characters are digits
-    for(int i = 17; i < 21; i++){
-        char ch = line[i];
-        if(isdigit(ch)){
-            return true;
-            break;
+    for(char ch : line){
+        if(!isdigit(ch) && ch != 'I' && ch != 'V' && ch != 'X' && ch != 'L' && ch != 'C' && ch != 'D' && ch != 'M' && ch != ' '){
+            return false;
         }
     }
     
-    return false;
+    return true;
 }
 
 int main(){
    string temp;  //variable for database filename
-   string batch; //variable for batch filename
 
    cout<<"Enter File Name: ";
    cin>>temp;
 
-   ifstream infile(temp, ios::binary);
-   ofstream outfile(database, ios::binary);
+   ifstream infile(temp);
+   ofstream outfile(database);
    string line;
    if (infile)
-        while (infile.good())
-        {
-            getline(infile, line);
-            if (line != "")
-                outfile << line << "\n";
-        }
+        while (getline(infile,line))
+            outfile << line << "\n";
 
    infile.close();
    outfile.close();
     
-    infile.open(temp, ios::binary);
-    outfile.open(database, ios::binary | ios::ate);
+    infile.open(temp);
+    outfile.open(database);
     
     char ch;
     int arabicNumb; // Holds the arabic numbers
@@ -204,19 +184,12 @@ int main(){
                 outfile << "                     " << endl;             
                 
             }
-
-            
-            
-    
         }
-    
     }
     else{ // If file fails to open, output this
         cout << "Error. File failed to open." << endl;
     }
-    
     infile.close();
     outfile.close();
-    
-    return 0;
+return 0;
 }
